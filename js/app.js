@@ -17,79 +17,34 @@ let equal = document.querySelector(".equal");
 let minus = document.querySelector(".minus");
 let plus = document.querySelector(".plus");
 let firstvalue = 0;
+let resultado;
+
+let numbers = [uno,dos,tres,cuatro,cinco,seis,siete,ocho,nueve,cero];
+
+let operations = [raiz,multi,divi,plus,minus];
+
+let signs = ['+','/','-','*','√'];
+
+numbers.forEach(number=>{
+    number.addEventListener('click',()=>{
+        whatPosition(number);
+    });
+});
+
+operations.forEach(operation =>{
+    operation.addEventListener('click',()=>{
+        firstValue();
+        whatPosition(operation);
+    });
+});
 
 clear.addEventListener("click", () => {
     input.value = "";
-})
-
-uno.addEventListener("click", ()=>{
-    whatPosition(uno);
-})
-
-dos.addEventListener("click", ()=>{
-    whatPosition(dos);
-})
-
-tres.addEventListener("click", ()=>{
-    whatPosition(tres);
-})
-
-cuatro.addEventListener("click", ()=>{
-    whatPosition(cuatro);
-})
-
-cinco.addEventListener("click", ()=>{
-    whatPosition(cinco);
-})
-
-seis.addEventListener("click", ()=>{
-    whatPosition(seis);
-})
-
-siete.addEventListener("click", ()=>{
-    whatPosition(siete);
-})
-
-ocho.addEventListener("click", ()=>{
-    whatPosition(ocho);
-})
-
-nueve.addEventListener("click", ()=>{
-    whatPosition(nueve);
-})
-
-cero.addEventListener("click", ()=>{
-    whatPosition(cero);
-})
-
-raiz.addEventListener("click", ()=>{
-    firstValue();
-    whatPosition(raiz);
-})
-
-multi.addEventListener("click", ()=>{
-    firstValue();
-    whatPosition(multi);
-})
-
-divi.addEventListener("click", ()=>{
-    firstValue();
-    whatPosition(divi);
-})
+});
 
 equal.addEventListener("click", ()=>{
     secondValueAndResponse();
-})
-
-minus.addEventListener("click", ()=>{
-    firstValue();
-    whatPosition(minus);
-})
-
-plus.addEventListener("click", () => {
-    firstValue();
-    whatPosition(plus);
-})
+});
 
 function whatPosition(number){
     input.value += number.textContent;
@@ -97,7 +52,7 @@ function whatPosition(number){
 
 function firstValue(){
     if(input.value.length > 0){
-        firstvalue = input.value;   
+        firstvalue = parseFloat(input.value,10);   
     }
     else{
         firstvalue = 2;
@@ -106,50 +61,41 @@ function firstValue(){
 
 function secondValueAndResponse(){
     let index;
-    let resultado;
-    let secondvalue =0; 
-    if(input.value.includes("+")){
-        index = input.value.indexOf("+");
-        secondvalue = input.value.slice(index + 1, );
-        resultado = parseFloat(secondvalue, 10) + parseFloat(firstvalue,10);
-        resultado.toString();
-        input.value = resultado;
-    }
-    else if(input.value.includes("-")){
-        index = input.value.indexOf("-");
-        secondvalue = input.value.slice(index + 1, );
-        resultado = parseFloat(firstvalue, 10) - parseFloat(secondvalue,10);
-        resultado.toString();
-        input.value = resultado;
-    }
-    else if(input.value.includes("*")){
-        index = input.value.indexOf("*");
-        secondvalue = input.value.slice(index +1,)
-        resultado = parseFloat(firstvalue,10)*parseFloat(secondvalue,10);
-        resultado.toString();
-        input.value = resultado;
-    }
-    else if(input.value.includes("/")){
-        index = input.value.indexOf("/");
-        secondvalue = input.value.slice(index+1,)
-        resultado = parseFloat(firstvalue,10) / parseFloat(secondvalue,10);
-        resultado.toString();
-        input.value = resultado;
-    }
-    else if(input.value.includes("√")){
-        index = input.value.indexOf("√");
-        let newOne = 1/parseFloat(firstvalue);
-        secondvalue = input.value.slice(index +1,)
-        resultado = Math.pow(parseFloat(secondvalue),newOne);
-        resultado.toString();
-        input.value = resultado;
-    }
-    else if(input.value.length === 0){
-        alert("There must be some operation")
-    }
-    console.log(firstvalue);
-    console.log(secondvalue);
-    console.log(resultado);
-}
+    let secondvalue = 0; 
+    let operation;
+    let resource = input.value;
 
+    signs.forEach(sign=>{
+        if(input.value.includes(sign)){
+            console.log(`sign ${sign} found`);
+            index = input.value.indexOf(sign);
+            secondvalue = parseFloat(input.value.slice(index + 1,),10);
+            operation = sign;
+        }
+    });
 
+    switch(operation){
+        case '+':
+            resultado = firstvalue + secondvalue;
+            break;
+        case '-':
+            resultado = firstvalue - secondvalue;
+            break;
+        case '*':
+            resultado = firstvalue * secondvalue;
+            break;
+        case '/':
+            resultado = firstvalue / secondvalue;
+            break;
+        case '√':
+            resultado = Math.pow(secondvalue,1/firstvalue);
+        default:
+            resultado = resource;
+            alert('there must be a operation');
+    }
+    if(isNaN(resultado)){
+        alert('invalid operation');
+        resultado = resource;
+    }
+    input.value = resultado;
+};
