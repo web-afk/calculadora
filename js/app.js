@@ -1,27 +1,12 @@
 let input = document.querySelector(".datos-texto");
 let clear = document.querySelector(".clear");
-let raiz = document.querySelector(".raiz");
-let multi = document.querySelector(".multi");
-let divi = document.querySelector(".dividir");
-let uno = document.querySelector(".uno");
-let dos = document.querySelector(".dos");
-let tres = document.querySelector(".tres");
-let cuatro = document.querySelector(".cuatro");
-let cinco = document.querySelector(".cinco");
-let seis = document.querySelector(".seis");
-let siete = document.querySelector(".siete");
-let ocho = document.querySelector(".ocho");
-let nueve = document.querySelector(".nueve");
-let cero = document.querySelector(".cero");
 let equal = document.querySelector(".equal");
-let minus = document.querySelector(".minus");
-let plus = document.querySelector(".plus");
 let firstvalue = 0;
 let resultado;
 
-let numbers = [uno,dos,tres,cuatro,cinco,seis,siete,ocho,nueve,cero];
+let numbers = [...document.querySelectorAll('.number')];
 
-let operations = [raiz,multi,divi,plus,minus];
+let operations = [...document.querySelectorAll('.sign')];
 
 let signs = ['+','/','-','*','√'];
 
